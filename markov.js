@@ -34,7 +34,6 @@ class MarkovMachine {
 
   makeText(numWords = 100) {
     // TODO
-    console.log('todo')
     const chains = this.makeChains()
     let str = ''
     let start = Math.floor(Math.random()*(this.words.length))
@@ -47,7 +46,6 @@ class MarkovMachine {
       str += `${current} `;
       current = chains[current][ran]
     }
-    console.log(str)
     return str
   }
 }

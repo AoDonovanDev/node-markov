@@ -10,9 +10,9 @@ let [npath, fpath, option, input] = process.argv
 
 const path = input;
 if(option === 'url'){
-    webCat(path, option)
+    webCat(path)
 } else {
-    cat(path, option)
+    cat(path)
 }
 
 
@@ -22,7 +22,7 @@ function cat(path){
             console.log('sorry, file not found', err.code)
             process.exit(1)
         }
-        callMachine(data)
+        return callMachine(data)
     })
 }
 
@@ -30,13 +30,17 @@ async function webCat(path){
     const response = await axios.get(path)
         .catch(err => { console.log("oh no", err.code) })
     if(response){
-        callMachine(response.data);
+        return callMachine(response.data);
     }
 }
 
 function callMachine(data){
     const mm = new MarkovMachine(data)
-    mm.makeText();
+    return mm.makeText();
 }
 
 
+module.exports = {
+    cat: cat,
+    webCat: webCat
+}
